@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Удаление записи сотрудника</h1>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="alert alert-warning mt-3 mx-3" role="alert">
+            Вы уверены, что хотите удалить запись сотрудника? Информация о занимаемых должностях и выплатах также удалится. Восстановить данные будет невозможно.
+        </div>
+        <ul class="list-group mx-3">
+            <li class="list-group-item"><b>ИД:</b> @Model.Id</li>
+            <li class="list-group-item"><b>Шифр:</b> @Model.Cipher</li>
+            <li class="list-group-item"><b>ФИО:</b> @Model.FullName</li>
+            <li class="list-group-item"><b>Дата рождения:</b> @Model.BirthDate.ToShortDateString()</li>
+            <li class="list-group-item"><b>Пол:</b> @ViewBag.Genders[Model.Gender]</li>
+        </ul>
+        <form method="post" asp-action="DeleteEmployee" asp-controller="Employees">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger my-3 ml-3" asp-action="DeleteEmployee">Удалить</button>
+        </form>
+    </div>
+</div>

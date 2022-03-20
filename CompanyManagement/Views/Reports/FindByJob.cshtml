@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Поиск сотрудников по должности</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Настройки поиска</h5>
+                    <form method="get" asp-action="FindByJob" asp-controller="Reports">
+                        <label for="jobTitle" class="form-label">Должность</label>
+                        <select name="jobTitle" class="form-select" id="job">
+                            @foreach (var jobTitle in ViewBag.JobTitles)
+                            {
+                            @if(ViewBag.SelectedJobTitle == jobTitle)
+                            {
+                            <option selected value="@jobTitle">@jobTitle</option>
+                            }
+                            else
+                            {
+                            <option value="@jobTitle">@jobTitle</option>
+                            }
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary ml-3" asp-action="FindByJob">Искать</button>
+                    </form>
+                 </div>
+                <div class="card-body">
+                    @if(ViewBag.SelectedJobTitle == "")
+                    {
+                    <div class="alert alert-primary" role="alert">
+                        Выберите должность, чтобы начать поиск.
+                    </div>
+                    }
+                    else
+                    {
+                    @if (ViewBag.EmployeesCount == 0)
+                    {
+                    <div class="alert alert-primary mt-3 mx-3" role="alert">
+                        Подходящие сотрудники не найдены.
+                    </div>
+                    }
+                    else
+                    {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ИД</th>
+                                <th scope="col">Шифр</th>
+                                <th scope="col">ФИО</th>
+                                <th scope="col">Дата рождения</th>
+                                <th scope="col">Пол</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in Model)
+                            {
+                            <tr>
+                                <th scope="row">@employee.Id</th>
+                                <td>@employee.Cipher</td>
+                                <td>@employee.FullName</td>
+                                <td>@employee.BirthDate.ToShortDateString()</td>
+                                <td>@ViewBag.Genders[employee.Gender]</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/FindByJob" role="button">
+                        Поиск сотрудников по должности
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/PromotionReport" role="button">
+                        Отчёт о движении сотрудника
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/FindEmploymentsInPeriod" role="button">
+                        Список принятых сотрудников за период
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/StatementOfCharges" role="button">
+                        Ведомость о начислениях
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

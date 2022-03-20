@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+    var firedDate = Model.IsFired ? Model.FiredDate.ToShortDateString() : "-";
+    var firedReason = Model.IsFired ? Model.FiredReason : "-";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Удаление записи должности</h1>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="alert alert-warning mt-3 mx-3" role="alert">
+            Вы уверены, что хотите удалить запись должности? Информация о выплатах также удалится. Восстановить данные будет невозможно.
+        </div>
+        <ul class="list-group mx-3">
+            <li class="list-group-item"><b>ИД:</b> @Model.Id</li>
+            <li class="list-group-item"><b>Название должности:</b> @Model.Title</li>
+            <li class="list-group-item"><b>Дата трудоустройство:</b> @Model.EmploymentDate.ToShortDateString()</li>
+            <li class="list-group-item"><b>Имя сотрудника:</b> @Model.Employee.FullName</li>
+            <li class="list-group-item"><b>Дата увольнения:</b> @firedDate</li>
+            <li class="list-group-item"><b>Причина увольнения:</b> @firedReason</li>
+        </ul>
+        <form method="post" asp-action="DeleteJob" asp-controller="Jobs">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger my-3 ml-3" asp-action="DeleteJob">Удалить</button>
+        </form>
+    </div>
+</div>

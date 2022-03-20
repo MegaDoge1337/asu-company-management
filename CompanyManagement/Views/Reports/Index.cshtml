@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Отчёты и выборки</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Подробная информация в отчётах и выборках</h5>
+                    <p class="card-text">Выполните поиск или выборку данных для поиска подробной информации о персонале.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/FindByJob" role="button">
+                        Поиск сотрудников по должности
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/PromotionReport" role="button">
+                        Отчёт о движении сотрудника
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/FindEmploymentsInPeriod" role="button">
+                        Список принятых сотрудников за период
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/StatementOfCharges" role="button">
+                        Ведомость о начислениях
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

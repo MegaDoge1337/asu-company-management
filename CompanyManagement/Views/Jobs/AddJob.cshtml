@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Добавить запись должности</h1>
+    <div class="alert alert-danger" role="alert" id="asu-error"></div>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-body">
+            <form method="post"
+                  asp-action="SaveJob"
+                  asp-controller="Jobs"
+                  onsubmit="CheckJobForm(event)"
+                  id="asu-form">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Название</label>
+                    <input type="text" name="title" class="form-control" id="title">
+                </div>
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Базовый оклад</label>
+                    <input type="number" name="salary" class="form-control" id="salary">
+                </div>
+                <div class="mb-3">
+                    <label for="rate" class="form-label">Ставка</label>
+                    <input type="number" name="rate" class="form-control" id="rate">
+                </div>
+                <div class="mb-3">
+                    <label for="employmentDate" class="form-label">Дата трудоустройства</label>
+                    <input type="date" name="employmentDate" class="form-control" id="employmentDate">
+                </div>
+                <div class="mb-3">
+                    <label for="employee" class="form-label">Сотрудник</label>
+                    <select name="employeeId" class="form-select" id="employee">
+                        @foreach (var employee in ViewBag.Employees)
+                        {
+                            <option value="@employee.Id">@employee.FullName</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" asp-action="SaveJob">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>

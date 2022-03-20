@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Добавить запись сотрудника</h1>
+    <div class="alert alert-danger" role="alert" id="asu-error"></div>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-body">
+            <form 
+                  method="post" 
+                  asp-action="SaveEmployee" 
+                  asp-controller="Employees" 
+                  onsubmit="CheckEmployeeForm(event)" 
+                  id="asu-form"
+            >
+                <div class="mb-3">
+                    <label for="cipher" class="form-label">Шифр</label>
+                    <input type="text" name="cipher" class="form-control" id="cipher">
+                </div>
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">ФИО</label>
+                    <input type="text" name="fullName" class="form-control" id="fullName">
+                </div>
+                <div class="mb-3">
+                    <label for="birthDate" class="form-label">Дата рождения</label>
+                    <input type="date" name="birthDate" class="form-control" id="birthDate">
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Пол</label>
+                    <select name="gender" class="form-select" id="gender">
+                        <option selected>не указан</option>
+                        <option value="1">мужской</option>
+                        <option value="2">женский</option>
+                        <option value="3">трансформер</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" asp-action="SaveEmployee">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>

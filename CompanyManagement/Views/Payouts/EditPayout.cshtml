@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Редактировать запись выплаты</h1>
+    <div class="alert alert-danger" role="alert" id="asu-error"></div>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-body">
+            <form method="post"
+                  asp-action="UpdatePayout"
+                  asp-controller="Payouts"
+                  onsubmit="CheckPayoutForm(event)"
+                  id="asu-form">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="mb-3">
+                    <label for="job" class="form-label">Должность</label>
+                    <select name="jobId" class="form-select" id="job">
+                        @foreach (var job in ViewBag.Jobs)
+                        {
+                            @if (Model.Job.Id == job.Id)
+                            {
+                                <option selected value="@job.Id">@job.Title (@job.Employee.FullName)</option>
+                            }
+                            else
+                            {
+                                <option value="@job.Id">@job.Title (@job.Employee.FullName)</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="payoutDate" class="form-label">Дата выплаты</label>
+                    <input type="date" value="@Model.Date.ToString("yyyy-MM-dd")" name="payoutDate" class="form-control" id="payoutDate">
+                </div>
+                <button type="submit" class="btn btn-primary" asp-action="UpdatePayout">Сохранить изменения</button>
+            </form>
+        </div>
+    </div>
+</div>

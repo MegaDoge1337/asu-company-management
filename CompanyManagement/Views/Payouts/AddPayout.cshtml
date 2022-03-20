@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Добавить запись выплаты</h1>
+    <div class="alert alert-danger" role="alert" id="asu-error"></div>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-body">
+            <form method="post"
+                  asp-action="SavePayout"
+                  asp-controller="Payouts"
+                  onsubmit="CheckPayoutForm(event)"
+                  id="asu-form">
+                <div class="mb-3">
+                    <label for="job" class="form-label">Должность</label>
+                    <select name="jobId" class="form-select" id="job">
+                        @foreach (var job in ViewBag.Jobs)
+                        {
+                            <option value="@job.Id">@job.Title (@job.Employee.FullName)</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="payoutDate" class="form-label">Дата выплаты</label>
+                    <input type="date" name="payoutDate" class="form-control" id="payoutDate">
+                </div>
+                <button type="submit" class="btn btn-primary" asp-action="SavePayout">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>

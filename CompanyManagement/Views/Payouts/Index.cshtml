@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Список выплат</h1>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <a class="btn btn-primary text-white mx-3 my-3" href="~/Payouts/AddPayout" role="button">
+            <i class="bi bi-plus"></i>
+            <i class="bi bi-credit-card-2-back-fill"></i>
+            Добавить новую выплату
+        </a>
+        <div class="card-body">
+            @if (ViewBag.PayoutsCount == 0)
+            {
+                <div class="alert alert-primary mt-3 mx-3" role="alert">
+                    Таблица выплат пуста.
+                </div>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ИД</th>
+                            <th scope="col">Дата выплаты</th>
+                            <th scope="col">Должность</th>
+                            <th scope="col">Сотрудник</th>
+                            <th scope="col" colspan="2">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payout in Model)
+                        {
+                            <tr>
+                                <th scope="row">@payout.Id</th>
+                                <td>@payout.Date.ToShortDateString()</td>
+                                <td>@payout.Job.Title</td>
+                                <td>@payout.Job.Employee.FullName</td>
+                                <td colspan="2">
+                                    <a class="btn btn-dark text-white ml-1"
+                                       href="~/Payouts/EditPayout?id=@payout.Id"
+                                       role="button">
+                                        <i class="bi bi-pen-fill"></i>
+                                    </a>
+                                    <a class="btn btn-danger text-white"
+                                       href="~/Payouts/AcceptDelete?id=@payout.Id"
+                                       role="button">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

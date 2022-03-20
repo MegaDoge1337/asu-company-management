@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+    var firedInfoDisplayType = Model.IsFired ? "" : "display:none;";
+    var firedDate = Model.FiredDate == DateTime.MinValue ? "" : Model.FiredDate.ToString("yyyy-MM-dd");
+}
+
+<div class="text-center">
+    <h1 class="display-4">Редактировать запись сотрудника</h1>
+    <div class="alert alert-danger" role="alert" id="asu-error"></div>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-body">
+            <form method="post"
+                  asp-action="UpdateJob"
+                  asp-controller="Jobs"
+                  onsubmit="CheckJobForm(event)"
+                  id="asu-form">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="mb-3">
+                    <label for="title" class="form-label">Название</label>
+                    <input type="text" value="@Model.Title" name="title" class="form-control" id="title">
+                </div>
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Базовый оклад</label>
+                    <input type="number" value="@Model.Salary" name="salary" class="form-control" id="salary">
+                </div>
+                <div class="mb-3">
+                    <label for="rate" class="form-label">Базовый оклад</label>
+                    <input type="number" value="@Model.Rate" name="rate" class="form-control" id="rate">
+                </div>
+                <div class="mb-3">
+                    <label for="employmentDate" class="form-label">Дата трудоустройства</label>
+                    <input type="date" value="@Model.EmploymentDate.ToString("yyyy-MM-dd")" name="employmentDate" class="form-control" id="employmentDate">
+                </div>
+                <div class="mb-3">
+                    <label for="employee" class="form-label">Сотрудник</label>
+                    <select name="employeeId" class="form-select" id="employee">
+                        @foreach (var employee in ViewBag.Employees)
+                        {
+                            <option value="@employee.Id">@employee.FullName</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="isFired" class="form-label d-flex align-items-center">
+                        <span class="pr-2">Уволен</span>
+                        @if (Model.IsFired)
+                        {
+                            <input type="checkbox" checked onchange="ToggleFiredInfoFields(event)" style="width: 15px; height: 15px;" name="isFired" class="form-control" id="isFired">
+                        }
+                        else
+                        {
+                            <input type="checkbox" onchange="ToggleFiredInfoFields(event)" style="width: 15px; height: 15px;" name="isFired" class="form-control" id="isFired">
+                        }
+                    </label>
+                </div>
+                <div id="asu-fired-info" style=@firedInfoDisplayType>
+                    <div class="mb-3">
+                        <label for="firedDate" class="form-label">Дата увольнения</label>
+                        <input type="date" value="@firedDate" name="firedDate" class="form-control" id="firedDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="firedReason" class="form-label">Причина увольнения</label>
+                        <input type="text" value="@Model.FiredReason" name="firedReason" class="form-control" id="firedReason">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" asp-action="UpdateJob">Сохранить изменения</button>
+            </form>
+        </div>
+    </div>
+</div>

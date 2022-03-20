@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\MegaDoge\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\MegaDoge\\.nuget\\packages"
+    ]
+  }
+}

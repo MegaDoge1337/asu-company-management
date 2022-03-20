@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Отчёт о движении сотрудника</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Настройки поиска</h5>
+                    <form method="get" asp-action="PromotionReport" asp-controller="Reports">
+                        <label for="employeeId" class="form-label">Сотрудник</label>
+                        <select name="employeeId" class="form-select" id="employee">
+                            @foreach (var employee in ViewBag.Employees)
+                            {
+                            @if(ViewBag.SelectedEmployeeId == employee.Id)
+                            {
+                            <option selected value="@employee.Id">@employee.FullName</option>
+                            }
+                            else
+                            {
+                            <option value="@employee.Id">@employee.FullName</option>
+                            }
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary ml-3" asp-action="PromotionReport">Сформировать</button>
+                    </form>
+                 </div>
+                <div class="card-body">
+                    @if(ViewBag.SelectedEmployeeId == 0)
+                    {
+                    <div class="alert alert-primary" role="alert">
+                        Выберите сотрудника, чтобы начать формирование отчёта.
+                    </div>
+                    }
+                    else
+                    {
+                    @if (ViewBag.JobsCount == 0)
+                    {
+                    <div class="alert alert-primary mt-3 mx-3" role="alert">
+                        Должности сотрудника не найдены.
+                    </div>
+                    }
+                    else
+                    {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ИД</th>
+                                <th scope="col">Должность</th>
+                                <th scope="col">Дата трудоустройства</th>
+                                <th scope="col">Дата увольнения</th>
+                                <th scope="col">Причина увольнения</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var job in ViewBag.Jobs)
+                            {
+                            <tr>
+                                <th scope="row">@job.Id</th>
+                                <td>@job.Title</td>
+                                <td>@job.EmploymentDate.ToShortDateString()</td>
+                                @if (job.FiredDate == DateTime.MinValue)
+                                {
+                                    <td>-</td>
+                                }
+                                else
+                                {
+                                    <td>@job.FiredDate.ToShortDateString()</td>
+                                }
+                                @if (job.FiredReason == "")
+                                {
+                                    <td>-</td>
+                                }
+                                else
+                                {
+                                    <td>@job.FiredReason</td>
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/FindByJob" role="button">
+                        Поиск сотрудников по должности
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/PromotionReport" role="button">
+                        Отчёт о движении сотрудника
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/FindEmploymentsInPeriod" role="button">
+                        Список принятых сотрудников за период
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-light" href="~/Reports/StatementOfCharges" role="button">
+                        Ведомость о начислениях
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

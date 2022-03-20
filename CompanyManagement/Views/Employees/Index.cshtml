@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Список сотрудников</h1>
+</div>
+<div class="container mt-2">
+    <div class="card">
+        <a class="btn btn-primary text-white mx-3 my-3" href="~/Employees/AddEmployee" role="button">
+            <i class="bi bi-plus"></i>
+            <i class="bi bi-person-fill"></i>
+            Добавить нового сотрудника
+        </a>
+        <div class="card-body">
+            @if (ViewBag.EmployeesCount == 0)
+            {
+                <div class="alert alert-primary mt-3 mx-3" role="alert">
+                    Таблица сотрудников пуста.
+                </div>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ИД</th>
+                            <th scope="col">Шифр</th>
+                            <th scope="col">ФИО</th>
+                            <th scope="col">Дата рождения</th>
+                            <th scope="col">Пол</th>
+                            <th scope="col" colspan="2">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var employee in Model)
+                        {
+                            <tr>
+                                <th scope="row">@employee.Id</th>
+                                <td>@employee.Cipher</td>
+                                <td>@employee.FullName</td>
+                                <td>@employee.BirthDate.ToShortDateString()</td>
+                                <td>@ViewBag.Genders[employee.Gender]</td>
+                                <td colspan="2">
+                                    <a class="btn btn-dark text-white ml-1"
+                                       href="~/Employees/EditEmployee?id=@employee.Id"
+                                       role="button">
+                                        <i class="bi bi-pen-fill"></i>
+                                    </a>
+                                    <a class="btn btn-danger text-white"
+                                       href="~/Employees/AcceptDelete?id=@employee.Id"
+                                       role="button">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
